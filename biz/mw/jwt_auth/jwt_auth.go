@@ -51,3 +51,11 @@ func JwtAdmin() app.HandlerFunc {
 		c.Set("claims", claims)
 	}
 }
+
+func GetClaimsFromCtx(ctx context.Context, c *app.RequestContext) (*utils.CustomClaims, error) {
+	claims, exists := c.Get("claims")
+	if !exists {
+		return nil, ierror.NewIError(-1, "未登录")
+	}
+	return claims.(*utils.CustomClaims), nil
+}

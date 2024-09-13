@@ -17,8 +17,10 @@ const (
 	UserNameExist
 	PasswordWrong
 	PhoneNumInvalid
+	NoLogin
 )
 
 var (
 	TokenIsInvalid = ierror.NewIError(TokenInvalid, "Token is invalid")
+	ErrNoLogin     = ierror.NewIError(NoLogin, "未登录")
 )
