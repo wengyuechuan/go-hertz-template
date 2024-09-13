@@ -21,3 +21,18 @@ func QueryUserByUserName(ctx context.Context, username string) (*model.User, err
 
 	return user, nil
 }
+
+func CreateUser(ctx context.Context, username, password string) error {
+	user := &model.User{
+		UserName: username,
+		Password: password,
+		Role:     consts.PermissionAdmin,
+	}
+	err := infra.MysqlDB.WithContext(ctx).Debug().
+		Create(user).Error
+	if err != nil {
+		ilog.EventError(ctx, err, "dao_create_user_error", "username", username)
+		return ierror.NewIError(consts.DBError, err.Error())
+	}
+	return nil
+}

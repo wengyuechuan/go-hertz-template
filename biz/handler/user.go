@@ -25,3 +25,22 @@ func UserLogin(ctx context.Context, c *app.RequestContext) {
 	}
 	utils.RespOK(ctx, c, map[string]string{"token": token})
 }
+
+// UserRegister 用户注册
+func UserRegister(ctx context.Context, c *app.RequestContext) {
+	var err error
+	var req user_service.UserRegisterReq
+
+	err = c.BindAndValidate(&req) // 传递json
+	if err != nil {
+		utils.RespErr(ctx, c, err)
+		return
+	}
+
+	err = user_service.UserRegister(ctx, req.Username, req.Password)
+	if err != nil {
+		utils.RespErr(ctx, c, err)
+		return
+	}
+	utils.RespOK(ctx, c, nil)
+}
