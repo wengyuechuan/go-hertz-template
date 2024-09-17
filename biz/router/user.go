@@ -9,5 +9,6 @@ func UserRegister(r route.IRouter) {
 	_user := r.Group("/user")
 	{
 		_user.GET("/login", handler.UserLogin)
+		_user.GET("/register", handler.UserRegister)
 	}
 }
